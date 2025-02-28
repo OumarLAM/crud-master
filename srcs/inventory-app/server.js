@@ -35,7 +35,7 @@ const PORT = process.env.INVENTORY_API_PORT || 8080;
 const HOST = process.env.INVENTORY_API_HOST || 'localhost';
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server is running on ${HOST}:${PORT}`);
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
 // export default app;
