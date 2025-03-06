@@ -17,6 +17,8 @@ router.put("/:id", update);
 router.delete("/:id", deleteMovie);
 router.delete("/", deleteAll);
 
+// TODO: Implement GET /api/movies?title=[name] retrieve all the movies with name in the title.
+
 export default (app) => {
     app.use("/api/movies", router);
 };
