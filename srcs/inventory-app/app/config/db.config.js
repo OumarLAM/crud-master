@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export default {
   HOST: process.env.POSTGRES_INVENTORY_HOST || "localhost",
   USER: process.env.POSTGRES_INVENTORY_USER || "postgres",
