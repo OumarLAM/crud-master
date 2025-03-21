@@ -12,8 +12,11 @@ echo "✅ Successfully installed dependencies"
 GO_VERSION="1.24.1"
 wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' | sudo tee /etc/profile.d/go.sh
-source /etc/profile.d/go.sh
+export PATH=$PATH:/usr/local/go/bin
+
+# Add Go to PATH permanently
+echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.bashrc
+source ~/.bashrc
 
 # Verify Go installation
 go version
@@ -29,12 +32,24 @@ RABBITMQ_HOST=${RABBITMQ_HOST}
 RABBITMQ_PORT=${RABBITMQ_PORT}
 RABBITMQ_USER=${RABBITMQ_USER}
 RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-RABBITMQ_BILLING_QUEUE=${RABBITMQ_BILLING_QUEUE}
+RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
 EOL
 
+cd /vagrant/srcs/api-gateway
+
 # Build the API Gateway
-[ ! -f go.mod ] && go mod init api-gateway
-go build -o api-gateway
+if [ ! -f go.mod ]; then
+  go mod init api-gateway
+  go mod tidy
+fi
+
+# Check if main.go exists in the cmd directory
+if [ ! -f cmd/main.go ]; then
+  echo "Error: No main.go file found in $(pwd)/cmd. Cannot build API Gateway."
+  exit 1
+fi
+
+go build -o api-gateway ./cmd
 
 # Start the API Gateway
 nohup ./api-gateway &
