@@ -10,9 +10,14 @@ echo "✅ Successfully installed dependencies"
 
 # Install Go
 GO_VERSION="1.24.1"
-wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
-sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+if ! go version | grep -q "$GO_VERSION"; then
+  echo "Installing Go $GO_VERSION..."
+  wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+  sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+  export PATH=$PATH:/usr/local/go/bin
+else
+  echo "✅ Go $GO_VERSION is already installed."
+fi
 
 # Add Go to PATH permanently
 echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.bashrc
