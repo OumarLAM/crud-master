@@ -6,13 +6,14 @@ echo "Setting up Inventory API VM..."
 # Update package lists and install dependencies
 sudo apt-get update -y && sudo apt-get upgrade -y
 sudo apt-get install -y curl gnupg2 git postgresql postgresql-contrib
+echo "✅ Successfully installed dependencies"
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 # Load NVM into the current session (this avoids "nvm command not found" errors)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
 
 # Install the latest Node.js version using NVM
 nvm install node
@@ -29,7 +30,8 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 
 # Create database and user
-sudo -u postgres psql -c "ALTER USER ${POSTGRES_INVENTORY_USER} PASSWORD '${POSTGRES_INVENTORY_PASSWORD}';"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='${POSTGRES_INVENTORY_USER}'" | grep -q 1 ||
+sudo -u postgres psql -c "CREATE USER ${POSTGRES_INVENTORY_USER} WITH PASSWORD '${POSTGRES_INVENTORY_PASSWORD}';"
 sudo -u postgres psql -c "CREATE DATABASE ${POSTGRES_INVENTORY_DB};"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_INVENTORY_DB} TO ${POSTGRES_INVENTORY_USER};"
 

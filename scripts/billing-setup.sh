@@ -6,6 +6,7 @@ echo "Setting up Billing API VM..."
 # Update package lists and install dependencies
 sudo apt-get update -y && sudo apt-get upgrade -y
 sudo apt-get install -y curl gnupg2 git postgresql postgresql-contrib apt-transport-https
+echo "✅ Successfully installed dependencies"
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -69,12 +70,13 @@ sudo systemctl start rabbitmq-server
 sudo systemctl enable rabbitmq-server
 
 # Configure RabbitMQ
-rabbitmqctl add_user ${RABBITMQ_USER} ${RABBITMQ_PASSWORD} || echo "User already exists"
-rabbitmqctl set_user_tags ${RABBITMQ_USER} administrator
-rabbitmqctl set_permissions -p / ${RABBITMQ_USER} ".*" ".*" ".*"
+sudo rabbitmqctl add_user ${RABBITMQ_USER} ${RABBITMQ_PASSWORD} || echo "User already exists"
+sudo rabbitmqctl set_user_tags ${RABBITMQ_USER} administrator
+sudo rabbitmqctl set_permissions -p / ${RABBITMQ_USER} ".*" ".*" ".*"
 
 # Create database and user
-sudo -u postgres psql -c "ALTER USER ${POSTGRES_BILLING_USER} PASSWORD '${POSTGRES_BILLING_PASSWORD}';"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='${POSTGRES_BILLING_USER}'" | grep -q 1 ||
+sudo -u postgres psql -c "CREATE USER ${POSTGRES_BILLING_USER} WITH PASSWORD '${POSTGRES_BILLING_PASSWORD}';"
 sudo -u postgres psql -c "CREATE DATABASE ${POSTGRES_BILLING_DB};"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_BILLING_DB} TO ${POSTGRES_BILLING_USER};"
 
@@ -93,16 +95,12 @@ POSTGRES_BILLING_PASSWORD=${POSTGRES_BILLING_PASSWORD}
 POSTGRES_BILLING_DB=${POSTGRES_BILLING_DB}
 POSTGRES_BILLING_HOST=localhost
 POSTGRES_BILLING_PORT=${POSTGRES_BILLING_PORT}
-RABBITMQ_HOST=localhost
+RABBITMQ_HOST=${RABBITMQ_HOST}
 RABBITMQ_PORT=${RABBITMQ_PORT}
 RABBITMQ_USER=${RABBITMQ_USER}
 RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
 RABBITMQ_URL=${RABBITMQ_URL}
 RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
 EOL
-
-# # Install project dependencies
-# cd /vagrant/srcs/billing-app
-# npm install
 
 echo "Billing API VM setup completed!"
