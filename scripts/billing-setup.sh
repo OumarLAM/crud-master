@@ -103,4 +103,15 @@ RABBITMQ_URL=${RABBITMQ_URL}
 RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
 EOL
 
+# Navigate to the app directory && Install dependencies
+cd /vagrant/srcs/billing-app && npm install
+if [ $? -eq 0 ]; then
+# Start the application with PM2
+    pm2 start server.js --name "billing-api" --time
+    echo "✅ Billing API started successfully with PM2"
+else
+    echo "❌ Failed to install npm dependencies"
+    exit 1
+fi
+
 echo "Billing API VM setup completed!"

@@ -47,4 +47,15 @@ POSTGRES_INVENTORY_HOST=localhost
 POSTGRES_INVENTORY_PORT=${POSTGRES_INVENTORY_PORT}
 EOL
 
+# Navigate to the app directory && Install dependencies
+cd /vagrant/srcs/inventory-app && npm install
+if [ $? -eq 0 ]; then
+# Start the application with PM2
+    pm2 start server.js --name "inventory-api" --time
+    echo "✅ Inventory API started successfully with PM2"
+else
+    echo "❌ Failed to install npm dependencies"
+    exit 1
+fi
+
 echo "Inventory API VM setup completed!"
