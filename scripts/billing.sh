@@ -26,7 +26,6 @@ npm -v
 npm install -g pm2
 
 # Configure PostgreSQL
-# sudo -u postgres psql -c "CREATE USER ${POSTGRES_BILLING_USER} WITH PASSWORD '${POSTGRES_BILLING_PASSWORD}';"
 sudo -u postgres psql -c "CREATE DATABASE ${POSTGRES_BILLING_DB};"
 sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${POSTGRES_BILLING_PASSWORD}'"
 
@@ -43,7 +42,10 @@ systemctl restart rabbitmq-server
 
 # Install Node.js app dependencies and start with PM2
 cp -r /vagrant/srcs/billing-app/ /home/vagrant/
+chown -R vagrant:vagrant /home/vagrant/billing-app
+
+su - vagrant <<EOF
 cd /home/vagrant/billing-app
 npm install
-pm2 start 'node server.js' --name 'billing-api'
-pm2 save
+sudo pm2 start 'node server.js' --name 'billing-api'
+EOF

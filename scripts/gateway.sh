@@ -40,9 +40,11 @@ npm install -g pm2
 # Build Go API Gateway
 cp -r /vagrant/srcs/api-gateway/ /home/vagrant/
 
-cd /home/vagrant/api-gateway
-/usr/local/go/bin/go mod download
+# Ensure the vagrant user owns the files
+chown -R vagrant:vagrant /home/vagrant/api-gateway
 
 # Start API Gateway with PM2
-pm2 start 'go run ./cmd' --name 'api-gateway'
-pm2 save
+su - vagrant <<EOF
+cd /home/vagrant/api-gateway
+sudo pm2 start 'go run ./cmd' --name 'api-gateway'
+EOF

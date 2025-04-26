@@ -35,7 +35,10 @@ sudo systemctl restart postgresql
 
 # Install Node.js app dependencies and start with PM2
 cp -r /vagrant/srcs/inventory-app/ /home/vagrant/
+chown -R vagrant:vagrant /home/vagrant/inventory-app
+
+su - vagrant <<EOF
 cd /home/vagrant/inventory-app
 npm install
-pm2 start 'node server.js' --name 'inventory-api'
-pm2 save
+sudo pm2 start 'node server.js' --name 'inventory-api'
+EOF
