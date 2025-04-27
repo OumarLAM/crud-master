@@ -31,7 +31,6 @@ sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${POSTGRES_BILLING_PASSW
 
 sed -i -E "s/\b(peer|trust)\b/md5/g" /etc/postgresql/14/main/pg_hba.conf
 sudo systemctl restart postgresql
-# sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_BILLING_DB} TO ${POSTGRES_BILLING_USER};"
 
 # Configure RabbitMQ
 rabbitmq-plugins enable rabbitmq_management
@@ -47,5 +46,5 @@ chown -R vagrant:vagrant /home/vagrant/billing-app
 su - vagrant <<EOF
 cd /home/vagrant/billing-app
 npm install
-sudo pm2 start 'node server.js' --name 'billing-api'
+pm2 start 'node server.js' --name 'billing-app'
 EOF

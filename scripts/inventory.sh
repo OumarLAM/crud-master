@@ -40,5 +40,5 @@ chown -R vagrant:vagrant /home/vagrant/inventory-app
 su - vagrant <<EOF
 cd /home/vagrant/inventory-app
 npm install
-sudo pm2 start 'node server.js' --name 'inventory-api'
+pm2 start 'node server.js' --name 'inventory-app'
 EOF

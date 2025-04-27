@@ -46,5 +46,5 @@ chown -R vagrant:vagrant /home/vagrant/api-gateway
 # Start API Gateway with PM2
 su - vagrant <<EOF
 cd /home/vagrant/api-gateway
-sudo pm2 start 'go run ./cmd' --name 'api-gateway'
+pm2 start 'go run ./cmd' --name 'api-gateway'
 EOF

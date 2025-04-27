@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.INVENTORY_API_PORT || 8080;
-const HOST = process.env.INVENTORY_API_HOST || 'localhost';
+const PORT = process.env.INVENTORY_API_PORT;
+const HOST = process.env.INVENTORY_API_HOST;
 
 app.listen(PORT, HOST, () => {
   console.log(`Server is running on http://${HOST}:${PORT}`);

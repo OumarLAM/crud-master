@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Billing API is running and listening for messages.' });
 });
 
-const PORT = process.env.BILLING_API_PORT || 8081;
-const HOST = process.env.BILLING_API_HOST || 'localhost';
+const PORT = process.env.BILLING_API_PORT;
+const HOST = process.env.BILLING_API_HOST;
 
 // Sync database and start the consumer
 db.sequelize.sync().then(() => {
