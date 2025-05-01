@@ -46,5 +46,5 @@ chown -R vagrant:vagrant /home/vagrant/billing-app
 su - vagrant <<EOF
 cd /home/vagrant/billing-app
 npm install
-pm2 start 'node server.js' --name 'billing-app'
+pm2 start 'node server.js' --name 'billing_app'
 EOF

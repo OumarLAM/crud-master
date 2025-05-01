@@ -1,0 +1,350 @@
+{
+  "info": {
+    "_postman_id": "f8a3e9d2-5c1e-4b6a-9e0e-ae2d3f52c6a7",
+    "name": "Movie Streaming Platform",
+    "description": "A collection for testing the Movie Streaming Platform microservices APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "API Gateway",
+      "description": "Endpoints available through the API Gateway",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies"]
+            },
+            "description": "Retrieves all movies from the inventory"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Movies by Title",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies?title=Matrix",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies"],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "Matrix"
+                }
+              ]
+            },
+            "description": "Search for movies containing the specified title string"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Movie by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies/1",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies", "1"]
+            },
+            "description": "Retrieves a specific movie by its ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create New Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Matrix\",\n  \"description\": \"A computer hacker learns about the true nature of reality\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies"]
+            },
+            "description": "Adds a new movie to the inventory"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Movie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Matrix Reloaded\",\n  \"description\": \"Neo and the rebels fight against the machines\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies/1",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies", "1"]
+            },
+            "description": "Updates an existing movie by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Movie",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies/1",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies", "1"]
+            },
+            "description": "Deletes a specific movie by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete All Movies",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "movies"]
+            },
+            "description": "Deletes all movies from the inventory"
+          },
+          "response": []
+        },
+        {
+          "name": "Create New Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"3\",\n  \"number_of_items\": \"5\",\n  \"total_amount\": \"180\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.200:3000/api/billing",
+              "protocol": "http",
+              "host": ["192", "168", "100", "200"],
+              "port": "3000",
+              "path": ["api", "billing"]
+            },
+            "description": "Creates a new order and sends it to the billing service via RabbitMQ"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Inventory API (Direct)",
+      "description": "Direct access to the Inventory API (for development and testing)",
+      "item": [
+        {
+          "name": "Get All Movies (Direct)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies"]
+            },
+            "description": "Directly retrieve all movies from the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Movies by Title (Direct)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies?title=Matrix",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies"],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "Matrix"
+                }
+              ]
+            },
+            "description": "Directly search for movies by title in the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Movie by ID (Direct)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies/1",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies", "1"]
+            },
+            "description": "Directly retrieve a specific movie by ID from the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Create New Movie (Direct)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception\",\n  \"description\": \"A thief who steals corporate secrets through dream-sharing technology\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies"]
+            },
+            "description": "Directly add a new movie to the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Movie (Direct)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception - Director's Cut\",\n  \"description\": \"Extended version of the dream-heist thriller\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies/2",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies", "2"]
+            },
+            "description": "Directly update an existing movie in the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Movie (Direct)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies/2",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies", "2"]
+            },
+            "description": "Directly delete a specific movie from the inventory service"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete All Movies (Direct)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.100.201:8080/api/movies",
+              "protocol": "http",
+              "host": ["192", "168", "100", "201"],
+              "port": "8080",
+              "path": ["api", "movies"]
+            },
+            "description": "Directly delete all movies from the inventory service"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Billing API (Direct)",
+      "description": "Direct access to the Billing API (for development and testing only, normally accessed via RabbitMQ)",
+      "item": [
+        {
+          "name": "Direct Order Creation (Development Only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"7\",\n  \"number_of_items\": \"3\",\n  \"total_amount\": \"45\"\n}"
+            },
+            "url": {
+              "raw": "http://192.168.100.202:8081/api/billing",
+              "protocol": "http",
+              "host": ["192", "168", "100", "202"],
+              "port": "8081",
+              "path": ["api", "billing"]
+            },
+            "description": "Create an order directly (bypass RabbitMQ, for development only)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
