@@ -314,37 +314,6 @@
           "response": []
         }
       ]
-    },
-    {
-      "name": "Billing API (Direct)",
-      "description": "Direct access to the Billing API (for development and testing only, normally accessed via RabbitMQ)",
-      "item": [
-        {
-          "name": "Direct Order Creation (Development Only)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"user_id\": \"7\",\n  \"number_of_items\": \"3\",\n  \"total_amount\": \"45\"\n}"
-            },
-            "url": {
-              "raw": "http://192.168.100.202:8081/api/billing",
-              "protocol": "http",
-              "host": ["192", "168", "100", "202"],
-              "port": "8081",
-              "path": ["api", "billing"]
-            },
-            "description": "Create an order directly (bypass RabbitMQ, for development only)"
-          },
-          "response": []
-        }
-      ]
     }
   ]
 }
