@@ -29,13 +29,15 @@ The system consists of three main components:
 ```
 .
 ├── README.md
-├── .env                     # Environment variables
-├── scripts/                 # VM provisioning scripts
+├── .env                                            # Environment variables
+├── scripts/                                        # VM provisioning scripts
+├── testing/                 
+|   ├── movie-platform.postman_collection.json      # Postman collection test file
 ├── srcs/
-│   ├── api-gateway/         # Go-based API Gateway
-│   ├── inventory-app/       # Node.js Inventory service
-│   └── billing-app/         # Node.js Billing service
-└── Vagrantfile              # VM configuration
+│   ├── api-gateway/                                # Go-based API Gateway
+│   ├── inventory-app/                              # Node.js Inventory service
+│   └── billing-app/                                # Node.js Billing service
+└── Vagrantfile                                     # VM configuration
 ```
 
 ## Getting Started
@@ -137,7 +139,7 @@ Example request body:
 
 ### Using Postman
 
-1. Import the provided Postman collection from `testing/postman_collection.json`
+1. Import the provided Postman collection from `testing/movie-platform.postman_collection.json`
 2. Run the collection to test all endpoints
 
 ## Implementation Details
